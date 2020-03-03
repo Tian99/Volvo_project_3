@@ -7,7 +7,6 @@ def construct(raw):
 	location_3_c = {}
 	location_4_c = {}
 	location_5_c = {}
-	location_5_c = {}
 	#First get the instance of all the first level locations
 	#Location_1 is a scam, starting with location_2
 	location_1_c = raw['loc_2'].unique()
@@ -28,6 +27,8 @@ def construct(raw):
 	for i in every_4:
 		location_5_c[i] = (raw.loc[raw['loc_5'] == i]['loc_6'].unique())
 
+
+	return [location_1_c, location_2_c, location_3_c, location_4_c, location_5_c]
 
 
 	print(len(location_2_c))
