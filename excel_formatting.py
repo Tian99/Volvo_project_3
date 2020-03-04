@@ -1,5 +1,6 @@
 import pandas as pd
 from pandas import DataFrame as df
+from Dutils import buffering_strip
 
 
 def split(content, lis):
@@ -20,18 +21,20 @@ def split(content, lis):
 def format_assign(raw):
 	d = {}
 	count = 0
-	new = df(d)
 	lis = [[] for i in range(0, 7)]
 
 	for index, row in raw.iterrows():
 		content = row['AALNAMECONCATENATED']
 		lis = split(content, lis)
-		print(count/len(raw))
+
+		print(count/len(raw)*100)
+
 		count += 1
 	print('finish spliting')
 
 	for i in range(1, len(lis)):
 		 d["loc_{0}".format(i)]=lis[i]
+	new = df(d)
 	print('finish formatting')
 
 	raw = pd.concat([raw, new], axis = 1)
@@ -47,6 +50,5 @@ def format_assign(raw):
 	print('Duplicates dropped')
 
 	return raw
-
 
 
