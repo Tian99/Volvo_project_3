@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>503</width>
-    <height>178</height>
+    <width>1348</width>
+    <height>746</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,20 +18,20 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>10</y>
       <width>151</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>File_name with address:</string>
+     <string>File_locs:</string>
     </property>
    </widget>
    <widget class="QPushButton" name="Compile">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>90</y>
+      <x>170</x>
+      <y>70</y>
       <width>114</width>
       <height>32</height>
      </rect>
@@ -43,11 +43,131 @@
    <widget class="QLineEdit" name="Address">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>40</y>
-      <width>331</width>
+      <x>80</x>
+      <y>10</y>
+      <width>201</width>
       <height>21</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>100</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>All_locs:</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="All_locs">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>121</y>
+      <width>161</width>
+      <height>531</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="Chosen_locs">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>120</y>
+      <width>171</width>
+      <height>531</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>100</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Locs_chosen: </string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Generate">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>660</y>
+      <width>114</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Generate</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>365</x>
+      <y>121</y>
+      <width>961</width>
+      <height>571</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Claim_address">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>40</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Claim_locs:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="study_search">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>10</y>
+      <width>871</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>10</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Detailed info:</string>
     </property>
    </widget>
   </widget>
@@ -57,7 +177,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>503</width>
+     <width>1348</width>
      <height>22</height>
     </rect>
    </property>

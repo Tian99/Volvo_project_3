@@ -1,6 +1,5 @@
 import pandas as pd
 from pandas import DataFrame as df
-from Dutils import buffering_strip
 
 
 def split(content, lis):
