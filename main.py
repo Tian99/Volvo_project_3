@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import application
 from os import path
 import pandas as pd
 from pandas import DataFrame as df
@@ -66,13 +67,13 @@ class Map(QtWidgets.QMainWindow):
 		self.loc_chosen()
 
 	def generate(self):
+		self.Selected_loc.clear()
 		for index in range(self.Chosen_locs.count()):
 			self.Selected_loc.append(self.Chosen_locs.item(index).text())
 		print(self.Selected_loc)
 		#Get all the partnumber from the selected_loc
-		for i in self.Selected_loc:
-			self.f.loc[f['loc_2'] == i]['PARTNO']
-
+		self.App = application.App(self.Selected_loc)
+		self.App.show()
 		#Match the locations with the claim
 
 	def enable(self):

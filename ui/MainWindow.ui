@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1348</width>
+    <width>358</width>
     <height>746</height>
    </rect>
   </property>
@@ -69,7 +69,7 @@
       <x>10</x>
       <y>121</y>
       <width>161</width>
-      <height>531</height>
+      <height>441</height>
      </rect>
     </property>
    </widget>
@@ -79,7 +79,7 @@
       <x>180</x>
       <y>120</y>
       <width>171</width>
-      <height>531</height>
+      <height>441</height>
      </rect>
     </property>
    </widget>
@@ -100,23 +100,13 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>660</y>
+      <y>610</y>
       <width>114</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Generate</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>365</x>
-      <y>121</y>
-      <width>961</width>
-      <height>571</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLineEdit" name="Claim_address">
@@ -142,32 +132,50 @@
      <string>Claim_locs:</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="study_search">
+   <widget class="QLineEdit" name="Address_2">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>10</y>
-      <width>871</width>
-      <height>22</height>
+      <x>80</x>
+      <y>590</y>
+      <width>151</width>
+      <height>21</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string/>
-     </property>
-    </item>
+   </widget>
+   <widget class="QLineEdit" name="Claim_address_2">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>640</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>10</y>
+      <x>20</x>
+      <y>590</y>
       <width>151</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Detailed info:</string>
+     <string>From</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>640</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>To</string>
     </property>
    </widget>
   </widget>
@@ -177,7 +185,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1348</width>
+     <width>358</width>
      <height>22</height>
     </rect>
    </property>
