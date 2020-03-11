@@ -51,7 +51,14 @@ class Map(QtWidgets.QMainWindow):
 			mkmsg('No such file existed, try again')
 			return
 		#Starting formatting the file
-		self.raw = format_assign(self.f)
+		try:
+			self.raw = pd.read_pickle("input/raw.pkl")
+			# Do something with the file
+		except IOError:
+			print("Creating new file")
+			self.raw = format_assign(self.f)
+			print("Writing file to input")
+			self.raw.to_pickle('input/raw.pkl')
 		#Construct the map
 		loc_collections = construct(self.raw)
 
@@ -92,9 +99,10 @@ class Map(QtWidgets.QMainWindow):
 
 		print(self.Selected_loc)
 		#Get all the partnumber from the selected_loc
-		self.App = application.App(self.Selected_loc)
-		self.App.show()
+		self.App = application.App(self.Selected_loc, self.loc_1)
+		sys.exit(self.App.exec_())
 		#Match the locations with the claim
+		exit()
 
 	def enable(self):
 		self.Compile.setDisabled(False)
