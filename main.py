@@ -4,9 +4,9 @@ import time
 import application
 from os import path
 import pandas as pd
+from Dutils import mkmsg
 from pandas import DataFrame as df
 from map_construct import construct
-from Dutils import mkmsg
 from excel_formatting import format_assign
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
 
@@ -15,12 +15,10 @@ class Map(QtWidgets.QMainWindow):
 
 		super().__init__()
 		#Define the variable
-		self.Selected_loc = []
+		self.Selected_loc = {}
 		self.f = None
-		self.cf = None
+		self.c_f = None
 		self.merged = None
-
-		self.loc_0 = self.loc_1 = self.loc_2 = self.loc_3 = self.loc_4 = 0
 		uic.loadUi('./ui/MainWindow.ui', self)
 		self.setWindowTitle('Main')
 		self.Address.textChanged.connect(self.enable)
@@ -53,9 +51,9 @@ class Map(QtWidgets.QMainWindow):
 			mkmsg('No such file existed, try again')
 			return
 		#Starting formatting the file
-		raw = format_assign(self.f)
+		self.raw = format_assign(self.f)
 		#Construct the map
-		loc_collections = construct(raw)
+		loc_collections = construct(self.raw)
 
 		self.loc_1 = loc_collections[0]
 		self.loc_2 = loc_collections[1]
@@ -67,9 +65,31 @@ class Map(QtWidgets.QMainWindow):
 		self.loc_chosen()
 
 	def generate(self):
+		count = 0
 		self.Selected_loc.clear()
 		for index in range(self.Chosen_locs.count()):
-			self.Selected_loc.append(self.Chosen_locs.item(index).text())
+			print(index)
+			current = self.Chosen_locs.item(index).text()
+			#There are redudant part numbers in the file, dont know if thats a problem
+			partno_collections = self.raw.loc[self.raw['loc_2'] ==  current]['PARTNO']
+
+			vehicle1 = 2 if 'Vehicle 2' in current else 1
+
+			for i in partno_collections:
+				if vehicle1 == 2:
+					length = len(self.c_f.loc[(self.c_f['Causal Part Number'] == str(i)) & (self.c_f['Vehicle Model Family'] == 'Mack Refuse')])
+				else:
+					length = len(self.c_f.loc[(self.c_f['Causal Part Number'] == str(i)) & (self.c_f['Vehicle Model Family'] != 'Mack Refuse')])
+				count += length
+
+				print(i)
+				print('==================================')
+				print(count)
+
+			self.Selected_loc[current] = count
+			#Remember to refresh the count
+			count = 0
+
 		print(self.Selected_loc)
 		#Get all the partnumber from the selected_loc
 		self.App = application.App(self.Selected_loc)
@@ -87,8 +107,6 @@ class Map(QtWidgets.QMainWindow):
 			print(i)
 			if i != 'NULL':
 				self.All_locs.addItem(i)
-
-		self.Selected_loc
 
 	def add_task(self, item):
 		print("add task %s" % item.text())

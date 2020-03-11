@@ -31,6 +31,6 @@ class App(QDialog):
         layout.setColumnStretch(2, 4)
         
         for i in self.location:
-            layout.addWidget(QPushButton(i))
+            layout.addWidget(QPushButton('{}\n\n#Claims:{}'.format(i, self.location[i])))
         
         self.horizontalGroupBox.setLayout(layout)

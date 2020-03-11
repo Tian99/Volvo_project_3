@@ -14,4 +14,4 @@ def read(filename):
 	print('finish converting')
 
 read('input/ALL - SR603 - W2008 (W20081).xlsx')
-read('input/2019-12 Claims.xlsx') 
+read('input/2019-12 Mack Claims.xlsx') 
