@@ -6,6 +6,7 @@ from os import path
 import pandas as pd
 from Dutils import mkmsg
 from pandas import DataFrame as df
+from generate import generate
 from map_construct import construct
 from excel_formatting import format_assign
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
@@ -15,7 +16,6 @@ class Map(QtWidgets.QMainWindow):
 
 		super().__init__()
 		#Define the variable
-		self.Selected_loc = {}
 		self.f = None
 		self.c_f = None
 		self.merged = None
@@ -25,7 +25,7 @@ class Map(QtWidgets.QMainWindow):
 		self.Claim_address.textChanged.connect(self.enable)
 		self.Compile.clicked.connect(self.disable)
 		self.Compile.clicked.connect(self.file_input)
-		self.Generate.clicked.connect(self.generate)
+		self.Generate.clicked.connect(self.visualization)
 		self.All_locs.itemClicked.connect(self.add_task)
 		self.Chosen_locs.itemClicked.connect(self.remove_task)
 
@@ -71,38 +71,13 @@ class Map(QtWidgets.QMainWindow):
 
 		self.loc_chosen()
 
-	def generate(self):
-		count = 0
-		self.Selected_loc.clear()
-		for index in range(self.Chosen_locs.count()):
-			print(index)
-			current = self.Chosen_locs.item(index).text()
-			#There are redudant part numbers in the file, dont know if thats a problem
-			partno_collections = self.raw.loc[self.raw['loc_2'] ==  current]['PARTNO']
+	def visualization(self):
 
-			vehicle1 = 2 if 'Vehicle 2' in current else 1
-
-			for i in partno_collections:
-				if vehicle1 == 2:
-					length = len(self.c_f.loc[(self.c_f['Causal Part Number'] == str(i)) & (self.c_f['Vehicle Model Family'] == 'Mack Refuse')])
-				else:
-					length = len(self.c_f.loc[(self.c_f['Causal Part Number'] == str(i)) & (self.c_f['Vehicle Model Family'] != 'Mack Refuse')])
-				count += length
-
-				print(i)
-				print('==================================')
-				print(count)
-
-			self.Selected_loc[current] = count
-			#Remember to refresh the count
-			count = 0
-
-		print(self.Selected_loc)
+		Selected_loc = generate(self.Chosen_locs, self.raw, self.c_f)
 		#Get all the partnumber from the selected_loc
-		self.App = application.App(self.Selected_loc, self.loc_1)
-		sys.exit(self.App.exec_())
+		self.App = application.App(self.raw, self.c_f, Selected_loc, self.loc_1, self.loc_2, self.loc_3, self.loc_4, title = 'Root')
+		self.App.exec_()
 		#Match the locations with the claim
-		exit()
 
 	def enable(self):
 		self.Compile.setDisabled(False)

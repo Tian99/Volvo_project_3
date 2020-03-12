@@ -27,13 +27,13 @@ def construct(raw):
 	for i in every_4:
 		location_5_c[i] = (raw.loc[raw['loc_5'] == i]['loc_6'].unique())
 
-	return [location_1_c, location_2_c, location_3_c, location_4_c, location_5_c]
-
 	print(len(location_1_c))
 	print(len(location_2_c))
 	print(len(location_3_c))
 	print(len(location_4_c))
 	print(len(location_5_c))
+
+	return [location_1_c, location_2_c, location_3_c, location_4_c, location_5_c]
 
 
 
