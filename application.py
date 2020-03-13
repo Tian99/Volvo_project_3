@@ -4,19 +4,23 @@ from PyQt5 import QtWidgets
 from functools import partial
 from PyQt5.QtCore import pyqtSlot
 from clicking import buttonClicked
+from Dutils import mkmsg
 import sys
 
 class App(QtWidgets.QDialog):
 
-    def __init__(self, raw, c_f, location, loc_1, loc_2, loc_3, loc_4, title):
+    def __init__(self, raw, c_f, location, loc_1, loc_2, loc_3, loc_4, loc_5, level, Top, title):
         super(App, self).__init__()
         self.location = location
+        self.level = level + 1
+        self.Top = Top
         self.raw = raw
         self.c_f = c_f
         self.loc_1 = loc_1
         self.loc_2 = loc_2
         self.loc_3 = loc_3
         self.loc_4 = loc_4
+        self.loc_5 = loc_5
         self.title = title
         self.left = 10
         self.top = 10
@@ -44,7 +48,20 @@ class App(QtWidgets.QDialog):
         for i in self.location:
             button = QPushButton('{}\n\n#Claims:{}'.format(i, self.location[i]))
             layout.addWidget(button)
-            button.clicked.connect(partial(buttonClicked, self.raw, self.c_f, i, self.loc_2, self.loc_2, self.loc_3, self.loc_4))
+            if self.level  == 1:
+                search_loc = self.loc_2
+            elif self.level == 2:
+                search_loc = self.loc_3
+            elif self.level == 3:
+                search_loc = self.loc_4
+            elif self.level == 4:
+                search_loc = self.loc_5
+
+            else:
+                print(self.level)
+                mkmsg('That is all the locations existed')
+                return
+            button.clicked.connect(partial(buttonClicked, self.raw, self.c_f, i, search_loc, self.loc_2, self.loc_3, self.loc_4, self.loc_5, self.level, self.Top, self.title))
 
         self.horizontalGroupBox.setLayout(layout)
     # App = App(self.loc_2[top_loc], loc_1, loc_2, loc_3, loc_4)
