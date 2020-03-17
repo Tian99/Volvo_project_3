@@ -9,8 +9,8 @@ import sys
 
 class App(QtWidgets.QDialog):
 
-    def __init__(self, raw, c_f, location, loc_1, loc_2, loc_3, loc_4, loc_5, level, Top, title):
-        super(App, self).__init__()
+    def __init__(self, raw, c_f, location, loc_1, loc_2, loc_3, loc_4, loc_5, level, Top, title, parent, stop = None):
+        super(App, self).__init__(parent)
         self.location = location
         self.level = level + 1
         self.Top = Top
@@ -38,31 +38,46 @@ class App(QtWidgets.QDialog):
         windowLayout = QVBoxLayout()
         windowLayout.addWidget(self.horizontalGroupBox)
         self.setLayout(windowLayout)
+
+    def stop(self):
+        self.hide()
+    def start(self):
+        self.parent().show()
+        self.destroy()
+        print('Working on it')
     
     def createGridLayout(self):
         self.horizontalGroupBox = QGroupBox("Grid")
         layout = QGridLayout()
         layout.setColumnStretch(1, 4)
         layout.setColumnStretch(2, 4)
+
+        button = QPushButton('<--Return')
+        #Add the return button in the end
+        if self.parent() != None:
+            layout.addWidget(button)
+            button.clicked.connect(self.start)
         
         for i in self.location:
-            button = QPushButton('{}\n\n#Claims:{}'.format(i, self.location[i]))
-            layout.addWidget(button)
-            if self.level  == 1:
-                search_loc = self.loc_2
-            elif self.level == 2:
-                search_loc = self.loc_3
-            elif self.level == 3:
-                search_loc = self.loc_4
-            elif self.level == 4:
-                search_loc = self.loc_5
+            if self.level < 5:
+                button = QPushButton('{}\n\n#Claims:{}'.format(i, self.location[i]))
+                layout.addWidget(button)
+                if self.level  == 1:
+                    search_loc = self.loc_2
+                elif self.level == 2:
+                    search_loc = self.loc_3
+                elif self.level == 3:
+                    search_loc = self.loc_4
+                elif self.level == 4:
+                    search_loc = self.loc_5
 
             else:
                 print(self.level)
-                mkmsg('That is all the locations existed')
-                return
-            button.clicked.connect(partial(buttonClicked, self.raw, self.c_f, i, search_loc, self.loc_2, self.loc_3, self.loc_4, self.loc_5, self.level, self.Top, self.title))
-
+                button = QPushButton('<--Return')
+                button.clicked.connect(self.start)
+                break
+                
+            button.clicked.connect(partial(buttonClicked, self.raw, self.c_f, i, search_loc, self.loc_2, self.loc_3, self.loc_4, self.loc_5, self.level, self.Top, self.title, self, self.stop))
         self.horizontalGroupBox.setLayout(layout)
     # App = App(self.loc_2[top_loc], loc_1, loc_2, loc_3, loc_4)
     # sys.exit(App.exec_())

@@ -79,8 +79,8 @@ class Map(QtWidgets.QMainWindow):
 		level = 0
 		Selected_loc = generate(self.Chosen_locs, self.raw, self.c_f, level, Top=None)
 		#Get all the partnumber from the selected_loc
-		self.App = application.App(self.raw, self.c_f, Selected_loc, self.loc_1, self.loc_2, self.loc_3, self.loc_4, self.loc_5, level, Top = None, title = 'Root')
-		self.App.exec_()
+		App = application.App(self.raw, self.c_f, Selected_loc, self.loc_1, self.loc_2, self.loc_3, self.loc_4, self.loc_5, level, Top = None, title = 'Root', parent = None)
+		App.exec_()
 		#Match the locations with the claim
 
 	def enable(self):
