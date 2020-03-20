@@ -30,8 +30,11 @@ def generate(Chosen_locs, raw, c_f, level, Top):
                 vehicle1 = 2 if 'Vehicle 2' in Top else 1
                 if vehicle1 == 2:
                     length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] == 'Mack Refuse')])
-                else:
+                elif vehicle1 == 1:
                     length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] != 'Mack Refuse')])
+                else: 
+                    length = len(c_f.loc[c_f['Causal Part Number'].isin(partno_collections.astype(str))])
+
 
                 Selected_loc[current] = length
                 #Remember to refresh the count
@@ -52,8 +55,11 @@ def generate(Chosen_locs, raw, c_f, level, Top):
                 vehicle1 = 2 if 'Vehicle 2' in current else 1
                 if vehicle1 == 2:
                     length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] == 'Mack Refuse')])
-                else:
+                elif vehicle1 == 1:
                     length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] != 'Mack Refuse')])
+                else:
+                    length = len(c_f.loc[c_f['Causal Part Number'].isin(partno_collections.astype(str))])
+
 
                 Selected_loc[current] = length
                 #Remember to refresh the count
