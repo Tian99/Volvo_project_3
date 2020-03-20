@@ -2,7 +2,6 @@ import numpy as np
 from Dutils import mkmsg
 
 def generate(Chosen_locs, raw, c_f, level, Top):
-        count = 0
         Selected_loc = {}
         if type(Chosen_locs) == np.ndarray:
 
@@ -19,26 +18,23 @@ def generate(Chosen_locs, raw, c_f, level, Top):
                 mkmsg('That is all the locations existed')
                 return
 
+            #There are redudant part numbers in the file, dont know if thats a problem
             for current in Chosen_locs:
-                #There are redudant part numbers in the file, dont know if thats a problem
-                partno_collections = raw.loc[raw[search_loc] ==  current]['PARTNO']
+                partno_collections = raw.loc[(raw[search_loc] == current) & (raw['loc_2'] == Top)]['PARTNO']
+                print('======================')
+                print(search_loc)
+                print(current)
+                print(len(partno_collections))
+                print(Top)
 
                 vehicle1 = 2 if 'Vehicle 2' in Top else 1
+                if vehicle1 == 2:
+                    length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] == 'Mack Refuse')])
+                else:
+                    length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] != 'Mack Refuse')])
 
-                for i in partno_collections:
-                    if vehicle1 == 2:
-                        length = len(c_f.loc[(c_f['Causal Part Number'] == str(i)) & (c_f['Vehicle Model Family'] == 'Mack Refuse')])
-                    else:
-                        length = len(c_f.loc[(c_f['Causal Part Number'] == str(i)) & (c_f['Vehicle Model Family'] != 'Mack Refuse')])
-                    count += length
-
-                    print(i)
-                    print('==================================')
-                    print(count)
-
-                Selected_loc[current] = count
+                Selected_loc[current] = length
                 #Remember to refresh the count
-                count = 0
             print(Selected_loc)
             return Selected_loc
 
@@ -48,24 +44,19 @@ def generate(Chosen_locs, raw, c_f, level, Top):
                 print(index)
                 current = Chosen_locs.item(index).text()
                 #There are redudant part numbers in the file, dont know if thats a problem
-                partno_collections = raw.loc[raw['loc_2'] ==  current]['PARTNO']
+                partno_collections = raw.loc[raw['loc_2'] == current]['PARTNO']
+
+                print('======================')
+                print(len(partno_collections))
 
                 vehicle1 = 2 if 'Vehicle 2' in current else 1
+                if vehicle1 == 2:
+                    length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] == 'Mack Refuse')])
+                else:
+                    length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] != 'Mack Refuse')])
 
-                for i in partno_collections:
-                    if vehicle1 == 2:
-                        length = len(c_f.loc[(c_f['Causal Part Number'] == str(i)) & (c_f['Vehicle Model Family'] == 'Mack Refuse')])
-                    else:
-                        length = len(c_f.loc[(c_f['Causal Part Number'] == str(i)) & (c_f['Vehicle Model Family'] != 'Mack Refuse')])
-                    count += length
-
-                    print(i)
-                    print('==================================')
-                    print(count)
-
-                Selected_loc[current] = count
+                Selected_loc[current] = length
                 #Remember to refresh the count
-                count = 0
-                print(Selected_loc)
+            print(Selected_loc)
                 #Need to keep track of the absolute first location to deal with vehicle 1 and vehicle 2 
             return Selected_loc

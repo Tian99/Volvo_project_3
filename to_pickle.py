@@ -13,5 +13,5 @@ def read(filename):
 		data.to_pickle('input/data.pkl')
 	print('finish converting')
 
-read('input/ALL - SR603 - W2008 (W20081).xlsx')
-read('input/2019-12 Mack Claims.xlsx') 
+read('input/locations.xlsx')
+read('input/claims.xlsx') 

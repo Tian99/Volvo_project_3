@@ -18,13 +18,19 @@ class Map(QtWidgets.QMainWindow):
 		#Define the variable
 		self.f = None
 		self.c_f = None
+		self.raw = None
 		self.merged = None
 		uic.loadUi('./ui/MainWindow.ui', self)
 		self.setWindowTitle('Main')
 		self.Address.textChanged.connect(self.enable)
+		self.Address.textChanged.connect(self.disable_generate)
 		self.Claim_address.textChanged.connect(self.enable)
+		self.Claim_address.textChanged.connect(self.disable_generate)
+		self.time.textChanged.connect(self.enable)
+		self.time.textChanged.connect(self.disable_generate)
 		self.Compile.clicked.connect(self.disable)
 		self.Compile.clicked.connect(self.file_input)
+		self.Compile.clicked.connect(self.enable_generate)
 		self.Generate.clicked.connect(self.visualization)
 		self.All_locs.itemClicked.connect(self.add_task)
 		self.Chosen_locs.itemClicked.connect(self.remove_task)
@@ -33,9 +39,13 @@ class Map(QtWidgets.QMainWindow):
 
 	#May change something later when it runs on windows 
 	def file_input(self):
+		self.Generate.setDisabled(False)
 		address = self.Address.text()
 		claim_address = self.Claim_address.text()
+		time = self.time.text()
 		print(type(address))
+		self.All_locs.clear()
+		self.Chosen_locs.clear()
 		#Check if the file exists
 		if path.exists(address) and path.exists(claim_address):
 			print('File scan successfully')
@@ -45,20 +55,30 @@ class Map(QtWidgets.QMainWindow):
 			except ModuleNotFoundError:
 				mkmsg('Wrong format')
 				return
+			#Change the time zone
+			if 'YYYY' in self.time.text():
+				print('Nothing entered')
+				low = self.c_f['Vehicle Assembly Date'].min().date()
+				high = self.c_f['Vehicle Assembly Date'].max().date()
+				text = str(low).replace('-','/')+':'+str(high).replace('-','/')
+
+				print(low)
+				print(high)
+				self.time.setText(text)
+			else: 
+				trange = self.time.text()
+				print(trange)
+				low = trange.split(':')[0]
+				high = trange.split(':')[1]
+				#Change the current file to the updated file
+				mask = (self.c_f['Vehicle Assembly Date'] >= low) & (self.c_f['Vehicle Assembly Date'] <= high)
+				self.c_f = self.c_f.loc[mask]
 		else:
 			print(address)
 			print(claim_address)
 			mkmsg('No such file existed, try again')
 			return
-		#Starting formatting the file
-		try:
-			self.raw = pd.read_pickle("input/raw.pkl")
-			# Do something with the file
-		except IOError:
-			print("Creating new file")
-			self.raw = format_assign(self.f)
-			print("Writing file to input")
-			self.raw.to_pickle('input/raw.pkl')
+		self.raw = format_assign(self.f)
 		#Construct the map
 		loc_collections = construct(self.raw)
 
@@ -88,6 +108,12 @@ class Map(QtWidgets.QMainWindow):
 
 	def disable(self):
 		self.Compile.setDisabled(True)
+		
+	def enable_generate(self):
+		self.Generate.setDisabled(False)
+
+	def disable_generate(self):
+		self.Generate.setDisabled(True)
 
 	def loc_chosen(self):
 		for i in self.loc_1:
