@@ -21,24 +21,19 @@ def generate(Chosen_locs, raw, c_f, level, Top):
             #There are redudant part numbers in the file, dont know if thats a problem
             for current in Chosen_locs:
                 partno_collections = raw.loc[(raw[search_loc] == current) & (raw['loc_2'] == Top)]['PARTNO']
-                print('======================')
-                print(search_loc)
-                print(current)
-                print(len(partno_collections))
-                print(Top)
 
                 vehicle1 = 2 if 'Vehicle 2' in Top else 1
                 if vehicle1 == 2:
-                    length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] == 'Mack Refuse')])
+                    detail = c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] == 'Mack Refuse')]
                 elif vehicle1 == 1:
-                    length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] != 'Mack Refuse')])
+                    detail = c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] != 'Mack Refuse')]
                 else: 
-                    length = len(c_f.loc[c_f['Causal Part Number'].isin(partno_collections.astype(str))])
+                    detail = c_f.loc[c_f['Causal Part Number'].isin(partno_collections.astype(str))]
 
 
-                Selected_loc[current] = length
+                Selected_loc[current] = detail
                 #Remember to refresh the count
-            print(Selected_loc)
+            print(len(Selected_loc))
             return Selected_loc
 
         else:
@@ -49,20 +44,17 @@ def generate(Chosen_locs, raw, c_f, level, Top):
                 #There are redudant part numbers in the file, dont know if thats a problem
                 partno_collections = raw.loc[raw['loc_2'] == current]['PARTNO']
 
-                print('======================')
-                print(len(partno_collections))
-
                 vehicle1 = 2 if 'Vehicle 2' in current else 1
                 if vehicle1 == 2:
-                    length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] == 'Mack Refuse')])
+                    detail = c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] == 'Mack Refuse')]
                 elif vehicle1 == 1:
-                    length = len(c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] != 'Mack Refuse')])
+                    detail = c_f.loc[(c_f['Causal Part Number'].isin(partno_collections.astype(str))) & (c_f['Vehicle Model Family'] != 'Mack Refuse')]
                 else:
-                    length = len(c_f.loc[c_f['Causal Part Number'].isin(partno_collections.astype(str))])
+                    detail = c_f.loc[c_f['Causal Part Number'].isin(partno_collections.astype(str))]
 
 
-                Selected_loc[current] = length
+                Selected_loc[current] = detail
                 #Remember to refresh the count
-            print(Selected_loc)
+            print(len(Selected_loc))
                 #Need to keep track of the absolute first location to deal with vehicle 1 and vehicle 2 
             return Selected_loc
